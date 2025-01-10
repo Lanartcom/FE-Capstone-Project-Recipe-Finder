@@ -4,8 +4,8 @@ import Header from './components/Header';
 import SearchBar from './components/SearchBar';
 import RecipeCard from './components/RecipeCard';
 import RecipeDetails from './components/RecipeDetails';
-console.log(RecipeDetails); // Check if this logs the component or `undefined`
-import fetchRecipes from './api/recipeAPI'; // Import API logic
+import fetchRecipes from './api/recipeAPI';
+import About from './components/About';
 
 const App = () => {
   const [recipes, setRecipes] = useState([]); // State for recipes
@@ -32,17 +32,21 @@ const App = () => {
             <div>
               <SearchBar onSearch={handleSearch} />
               <main className="p-4">
-                {recipes.length > 0 ? (
-                  recipes.map((recipe) => (
-                    <RecipeCard key={recipe.idMeal} recipe={recipe} />
-                  ))
-                ) : (
-                  <p className="text-gray-500">No recipes found. Try searching for a dish!</p>
-                )}
+                {/* Grid Layout for Recipe Cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {recipes.length > 0 ? (
+                    recipes.map((recipe) => (
+                      <RecipeCard key={recipe.idMeal} recipe={recipe} />
+                    ))
+                  ) : (
+                    <p className="text-gray-500">No recipes found. Try searching for a dish!</p>
+                  )}
+                </div>
               </main>
             </div>
           }
         />
+            <Route path="/about" element={<About />} /> {/* Add the About route */}
         <Route path="/recipe/:id" element={<RecipeDetails />} />
       </Routes>
     </Router>

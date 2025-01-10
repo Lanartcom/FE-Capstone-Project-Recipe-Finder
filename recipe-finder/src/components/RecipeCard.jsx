@@ -1,10 +1,23 @@
 import { Link } from 'react-router-dom';
 
 const RecipeCard = ({ recipe }) => (
-  <div className="border rounded p-4 m-2">
-    <img src={recipe.strMealThumb} alt={recipe.strMeal} className="w-full h-48 object-cover" />
-    <h2 className="text-lg font-bold mt-2">{recipe.strMeal}</h2>
-    <p>{recipe.strCategory} - {recipe.strArea}</p>
+  <div className="border rounded-lg p-4 flex flex-col">
+    {/* Image */}
+    <div className="w-full h-40 overflow-hidden rounded-lg">
+      <img
+        src={recipe.strMealThumb}
+        alt={recipe.strMeal}
+        className="w-full h-full object-cover"
+      />
+    </div>
+
+    {/* Title */}
+    <h2 className="text-lg font-bold mt-2 truncate">{recipe.strMeal}</h2>
+
+    {/* Category and Area */}
+    <p className="text-sm text-gray-600 mt-1">{recipe.strCategory} - {recipe.strArea}</p>
+
+    {/* View Details Link */}
     <Link
       to={`/recipe/${recipe.idMeal}`}
       className="text-blue-500 underline mt-2 inline-block"
