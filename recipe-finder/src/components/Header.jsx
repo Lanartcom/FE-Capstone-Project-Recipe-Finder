@@ -28,6 +28,15 @@ const Header = () => {
           >
             RECIPES
           </a>
+          {/* Add Shopping List Link */}
+          <Link to="/shopping-list" className="hover:text-amber-700">
+
+            SHOPPING LIST
+          </Link>
+        {/* Add Favorites Link */}
+        <Link to="/favorites" className="hover:text-amber-700">
+            FAVORITES
+          </Link>
         </nav>
 
         {/* Social Icons on the right */}
