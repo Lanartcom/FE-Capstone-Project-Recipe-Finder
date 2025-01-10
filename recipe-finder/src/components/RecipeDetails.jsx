@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import fetchRecipes from '../api/recipeAPI'; // Adjust the path if necessary
+import { fetchRecipes } from '../api/recipeAPI'; // Adjust the path if necessary
 
 const RecipeDetails = () => {
   const { id } = useParams(); // Extract the recipe ID from the URL
@@ -10,10 +10,12 @@ const RecipeDetails = () => {
   useEffect(() => {
     const fetchRecipeDetails = async () => {
       const data = await fetchRecipes(id, true); // Fetch recipe by ID
-      if (data) {
-        setRecipe(data);
+      console.log(data); // Log the data to inspect its structure
+
+      if (data && data.meals && data.meals.length > 0) {
+        setRecipe(data.meals[0]); // Extract the first meal from the array
       } else {
-        setError('Failed to fetch recipe details');
+        setError('Recipe not found');
       }
     };
 
@@ -45,7 +47,7 @@ const RecipeDetails = () => {
           ))}
       </ul>
       <h2 className="text-xl mt-4">Instructions:</h2>
-      <p>{recipe.strInstructions}</p>
+      <p className="whitespace-pre-wrap">{recipe.strInstructions}</p>
       {recipe.strYoutube && (
         <div className="mt-4">
           <h2 className="text-xl">Video:</h2>

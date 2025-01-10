@@ -21,7 +21,7 @@ const Header = () => {
           <Link to="/" className="hover:text-amber-700">HOME</Link>
           <Link to="/about" className="hover:text-amber-700">ABOUT</Link>
           <a
-            href="https://www.recipewagon.com/"
+            href="https://www.themealdb.com/"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-amber-700"
@@ -33,7 +33,7 @@ const Header = () => {
         {/* Social Icons on the right */}
         <div className="flex space-x-4">
           <a
-            href="https://www.instagram.com/recipewagon/" // Replace with your Instagram link
+            href="https://www.instagram.com" // Replace with your Instagram link
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-amber-700"
@@ -41,7 +41,7 @@ const Header = () => {
             <FaInstagram size={24} />
           </a>
           <a
-            href="https://www.youtube.com/@RecipeWagon" // Replace with your YouTube link
+            href="https://www.youtube.com" // Replace with your YouTube link
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-amber-700"

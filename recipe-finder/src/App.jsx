@@ -4,7 +4,7 @@ import Header from './components/Header';
 import SearchBar from './components/SearchBar';
 import RecipeCard from './components/RecipeCard';
 import RecipeDetails from './components/RecipeDetails';
-import fetchRecipes from './api/recipeAPI';
+import { fetchRecipes } from './api/recipeAPI'; // Use named import
 import About from './components/About';
 
 const App = () => {
@@ -12,15 +12,21 @@ const App = () => {
   const [query, setQuery] = useState('');    // State for search query
 
   // Function to handle search
-  const handleSearch = async (query) => {
-    setQuery(query); // Update search query state
-    if (query.trim()) {
-      const data = await fetchRecipes(query); // Fetch data using API logic
-      setRecipes(data); // Update state with fetched recipes
+const handleSearch = async (query) => {
+  console.log('Search Query:', query); // Log the search query
+  setQuery(query); // Update search query state
+  if (query.trim()) {
+    const data = await fetchRecipes(query); // Fetch data using API logic
+    console.log('Fetched Recipes:', data); // Log the fetched data
+    if (data && data.meals) {
+      setRecipes(data.meals); // Update state with fetched recipes
     } else {
-      setRecipes([]); // Clear results if query is empty
+      setRecipes([]); // Clear results if no meals are found
     }
-  };
+  } else {
+    setRecipes([]); // Clear results if query is empty
+  }
+};
 
   return (
     <Router>
@@ -39,7 +45,7 @@ const App = () => {
                       <RecipeCard key={recipe.idMeal} recipe={recipe} />
                     ))
                   ) : (
-                    <p className="text-gray-500">No recipes found. Try searching for a dish!</p>
+                    <p className="text-gray-500">No recipes found...🤔 How about another dish?</p>
                   )}
                 </div>
               </main>

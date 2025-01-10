@@ -1,20 +1,21 @@
-const fetchRecipes = async (query) => {
-    try {
-      const response = await fetch(
-        `https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`
-      );
-  
-      if (!response.ok) {
-        throw new Error('Failed to fetch recipes');
-      }
-  
-      const data = await response.json();
-      return data.meals || [];
-    } catch (error) {
-      console.error('API Error:', error.message);
-      return [];
+// api/recipeAPI.js
+export const fetchRecipes = async (query, byId = false) => {
+  try {
+    let url;
+    if (byId) {
+      // Fetch recipe details by ID
+      url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${query}`;
+    } else {
+      // Search recipes by name
+      url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`;
     }
-  };
-  
-  export default fetchRecipes;
-  
+
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log('API Response:', data); // Log the API response
+    return data;
+  } catch (error) {
+    console.error('Error fetching recipes:', error);
+    return null;
+  }
+};
