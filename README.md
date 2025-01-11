@@ -38,18 +38,6 @@ Recipe Finder is a web application that allows users to search for recipes based
 Check out the live version of the app:  
 👉 [Recipe Finder on Vercel](https://fe-capstone-project-recipe-finder-45nu0wsr9-lanartcoms-projects.vercel.app/)
 
----
-
-## Screenshots 📸
-
-### Home Page
-![Home Page](https://ibb.co/x1tshjr)
-
-### Search Results
-![Search Results](https://ibb.co/zN7zTWZ)
-
-### Recipe Details
-![Recipe Details](https://ibb.co/vw5T1HW)
 
 ---
 
