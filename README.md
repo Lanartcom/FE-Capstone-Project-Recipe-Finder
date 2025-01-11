@@ -73,5 +73,5 @@ Follow these steps to set up the project locally on your machine.
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-username/recipe-finder.git
+   git clone https://github.com/Lanartcom/FE-Capstone-Project-Recipe-Finder.git
    cd recipe-finder
