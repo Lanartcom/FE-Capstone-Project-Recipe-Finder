@@ -4,24 +4,32 @@ import RecipeCard from './RecipeCard';
 import SearchBar from './SearchBar';
 import { fetchRecipes } from '../api/recipeAPI'; // Import fetchRecipes
 
-const Home = ({ handleSearch, recipes, addToFavorites, favorites }) => {
+const Home = ({ handleSearch, recipes, addToFavorites, favorites = [] }) => {
   const [popularRecipes, setPopularRecipes] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Fetch popular recipes on component mount
   useEffect(() => {
     const fetchPopularRecipes = async () => {
       const queries = ['Pasta', 'Pizza', 'Chicken', 'Burger', 'Salad'];
-      const recipes = await Promise.all(
-        queries.map((query) => fetchRecipes(query)) // Use fetchRecipes
-      );
-      // Filter out duplicates
-      const uniqueRecipes = recipes
-        .flatMap((data) => data.meals || [])
-        .filter((recipe, index, self) =>
-          self.findIndex((r) => r.idMeal === recipe.idMeal) === index
+      try {
+        const recipes = await Promise.all(
+          queries.map((query) => fetchRecipes(query))
         );
-      setPopularRecipes(uniqueRecipes);
-      setIsLoading(false);
+
+        // Filter out duplicates
+        const uniqueRecipes = recipes
+          .flatMap((data) => data?.meals || []) // Use optional chaining to avoid errors
+          .filter((recipe, index, self) =>
+            self.findIndex((r) => r.idMeal === recipe.idMeal) === index
+          );
+
+        setPopularRecipes(uniqueRecipes);
+      } catch (error) {
+        console.error('Error fetching popular recipes:', error);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
     fetchPopularRecipes();
@@ -63,6 +71,7 @@ const Home = ({ handleSearch, recipes, addToFavorites, favorites }) => {
       <div className="mt-8">
         <h2 className="text-2xl font-bold text-center mb-4">Popular Recipes</h2>
         {isLoading ? (
+          // Loading skeleton
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {[...Array(4)].map((_, index) => (
               <div key={index} className="animate-pulse">
@@ -72,7 +81,8 @@ const Home = ({ handleSearch, recipes, addToFavorites, favorites }) => {
               </div>
             ))}
           </div>
-        ) : (
+        ) : popularRecipes.length > 0 ? (
+          // Display popular recipes
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {popularRecipes.map((recipe) => (
               <RecipeCard
@@ -83,10 +93,18 @@ const Home = ({ handleSearch, recipes, addToFavorites, favorites }) => {
               />
             ))}
           </div>
+        ) : (
+          // No recipes found
+          <p className="text-gray-500 text-center">No popular recipes found.</p>
         )}
       </div>
     </div>
   );
+};
+
+// Default props
+Home.defaultProps = {
+  favorites: [],
 };
 
 export default Home;

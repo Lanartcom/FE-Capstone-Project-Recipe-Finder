@@ -9,6 +9,7 @@ import About from './components/About';
 import Favorites from './components/Favorites';
 import Home from './components/Home'; // Import the Home component
 import { fetchRecipes } from './api/recipeAPI';
+import CategoryPage from './components/CategoryPage'; // Import CategoryPage
 
 const App = () => {
   const [recipes, setRecipes] = useState([]);
@@ -129,6 +130,16 @@ const clearShoppingList = () => {
             />
           }
         />
+        {/* Category Page */}
+        <Route
+  path="/category/:categoryName"
+  element={
+    <CategoryPage
+      addToFavorites={addToFavorites}
+      favorites={favorites}
+    />
+  }
+/>
       </Routes>
     </Router>
   );

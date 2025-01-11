@@ -1,64 +1,64 @@
-import { FaHeart } from 'react-icons/fa'; // Import heart icon
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import RecipeCard from './RecipeCard'; // Ensure this is imported
 
-const Favorites = ({ favorites, removeFromFavorites }) => {
-  const navigate = useNavigate();
+const Favorites = ({ favorites = [], removeFromFavorites }) => {
+  // Predefined categories
+  const categories = [
+    { name: 'Desserts', path: '/category/Desserts' },
+    { name: 'Pasta', path: '/category/Pasta' },
+    { name: 'Burgers', path: '/category/Burgers' },
+    { name: 'Curries', path: '/category/Curries' },
+    { name: 'Stir-Fries', path: '/category/Stir-Fries' },
+    { name: 'Grilled Dishes', path: '/category/Grilled Dishes' },
+    { name: 'Breakfast', path: '/category/Breakfast' },
+    { name: 'Snacks', path: '/category/Snacks' },
+    { name: 'Smoothies', path: '/category/Smoothies' },
 
-  // Handle undefined or null favorites
-  if (!favorites) {
-    return <p className="text-gray-500">Unable to load favorites. Please try again later.</p>;
-  }
-
-  // Confirmation dialog for removing favorites
-  const handleRemove = (idMeal) => {
-    const confirmRemove = window.confirm("Remove this recipe from favorites?💔");
-    if (confirmRemove) {
-      removeFromFavorites(idMeal);
-    }
-  };
+  ];
 
   return (
     <div className="p-4">
-    
       <h1 className="text-2xl font-bold mb-4">Favorites</h1>
-      {favorites.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {favorites.map((recipe) => (
-            <div key={recipe.idMeal} className="border rounded-lg p-4 flex flex-col min-h-[300px] hover:shadow-lg transition-shadow">
-              <img
-                src={recipe.strMealThumb}
-                alt={recipe.strMeal}
-                className="w-full h-48 object-cover rounded-lg"
-              />
-              <h2 className="text-lg font-bold mt-2 truncate">{recipe.strMeal}</h2>
-              <p className="text-sm text-gray-600">{recipe.strCategory} - {recipe.strArea}</p>
-              <div className="flex justify-between items-center mt-4">
+      {favorites.length === 0 ? (
+        <div className="text-center">
+          <p className="text-gray-500 italic py-8">
+            Your favorites list is empty. Let's add some recipes! ✍🏼
+          </p>
+          {/* Display Recipe Categories */}
+          <div className="mt-8">
+            <h2 className="text-lg font-bold mb-6">Discover Recipes by Category</h2>
+            <div className="flex flex-wrap justify-center gap-4">
+              {categories.map((category) => (
                 <Link
-                  to={`/recipe/${recipe.idMeal}`}
-                  className="text-blue-500 underline hover:text-blue-700 transition-colors"
-                  aria-label={`View details for ${recipe.strMeal}`}
+                  key={category.name}
+                  to={category.path}
+                  className="bg-amber-500 text-white px-6 py-2 rounded-lg hover:bg-amber-600 transition-colors"
                 >
-                  View Details
+                  {category.name}
                 </Link>
-                {/* Heart Icon to Remove from Favorites */}
-                <button
-                  onClick={() => handleRemove(recipe.idMeal)}
-                  className="text-red-500 hover:text-red-700 transition-colors"
-                  aria-label={`Remove ${recipe.strMeal} from favorites`}
-                >
-                  <FaHeart size={20} />
-                </button>
-              </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       ) : (
-        <p className="text-gray-500 text-center py-8">
-          Your favorites list is empty. Let's add some recipes!
-        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {favorites.map((recipe) => (
+            <RecipeCard
+              key={recipe.idMeal}
+              recipe={recipe}
+              addToFavorites={() => removeFromFavorites(recipe.idMeal)} // Toggle favorite
+              favorites={favorites}
+            />
+          ))}
+        </div>
       )}
     </div>
   );
+};
+
+// Default props
+Favorites.defaultProps = {
+  favorites: [],
 };
 
 export default Favorites;

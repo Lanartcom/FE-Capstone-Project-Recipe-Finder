@@ -2,7 +2,10 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaHeart, FaRegHeart } from 'react-icons/fa'; // Import heart icons
 
-const RecipeCard = ({ recipe, addToFavorites, favorites }) => {
+const RecipeCard = ({ recipe, addToFavorites, favorites = [] }) => {
+  console.log('RecipeCard - favorites:', favorites); // Debugging log
+  console.log('RecipeCard - recipe:', recipe); // Debugging log
+
   const isFavorited = favorites.some((fav) => fav.idMeal === recipe.idMeal);
 
   const toggleFavorite = () => {
@@ -48,6 +51,10 @@ const RecipeCard = ({ recipe, addToFavorites, favorites }) => {
       </div>
     </div>
   );
+};
+
+RecipeCard.defaultProps = {
+  favorites: [],
 };
 
 export default RecipeCard;

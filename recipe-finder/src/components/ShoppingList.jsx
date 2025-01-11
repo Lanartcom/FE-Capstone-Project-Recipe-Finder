@@ -1,8 +1,24 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const ShoppingList = ({ list, removeFromShoppingList, updateQuantity, clearShoppingList }) => {
   const [quantities, setQuantities] = useState({});
   const [checkedItems, setCheckedItems] = useState({});
+
+ // Predefined categories
+ const categories = [
+    { name: 'Beef', path: '/category/Beef' },
+    { name: 'Chicken', path: '/category/Chicken' },
+    { name: 'Pork', path: '/category/Pork' },
+    { name: 'Lamb', path: '/category/Lamb' },
+    { name: 'Fish', path: '/category/Fish' },
+    { name: 'Seafood', path: '/category/Seafood' },
+    { name: 'Cheese', path: '/category/Cheese' },
+        { name: 'Bread', path: '/category/Bread' },
+        { name: 'Pasta', path: '/category/Pasta' },
+
+  ];
+
 
   // Handle undefined or null list
   if (!list) {
@@ -33,9 +49,26 @@ const ShoppingList = ({ list, removeFromShoppingList, updateQuantity, clearShopp
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Shopping List</h1>
       {list.length === 0 ? (
-        <p className="text-gray-500 text-center py-8">
-          Your shopping list is empty. Let's add some ingredients!
-        </p>
+        <div className="text-center">
+          <p className="text-gray-500 italic py-8">
+            Your shopping list is empty. Let's add some ingredients! ✍🏼
+          </p>
+          {/* Display Recipe Categories */}
+          <div className="mt-8">
+            <h2 className="text-lg font-bold mb-6">Discover Recipes by Category</h2>
+            <div className="flex flex-wrap justify-center gap-4">
+              {categories.map((category) => (
+                <Link
+                  key={category.name}
+                  to={category.path}
+                  className="bg-amber-500 text-white px-6 py-2 rounded-lg hover:bg-amber-600 transition-colors"
+                >
+                  {category.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
       ) : (
         <>
           <ul>
