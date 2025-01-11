@@ -6,7 +6,8 @@ import RecipeCard from './components/RecipeCard';
 import RecipeDetails from './components/RecipeDetails';
 import ShoppingList from './components/ShoppingList';
 import About from './components/About';
-import Favorites from './components/Favorites'; // Import the Favorites component
+import Favorites from './components/Favorites';
+import Home from './components/Home'; // Import the Home component
 import { fetchRecipes } from './api/recipeAPI';
 
 const App = () => {
@@ -18,6 +19,10 @@ const App = () => {
     const savedFavorites = localStorage.getItem('favorites');
     return savedFavorites ? JSON.parse(savedFavorites) : [];
   });
+// Function to clear the shopping list
+const clearShoppingList = () => {
+  setShoppingList([]); // Clear the list by setting it to an empty array
+};
 
   // Save favorites to localStorage whenever it changes
   useEffect(() => {
@@ -73,37 +78,32 @@ const App = () => {
     <Router>
       <Header />
       <Routes>
+        {/* Home Page */}
         <Route
           path="/"
           element={
-            <div>
-              <SearchBar onSearch={handleSearch} />
-              <main className="p-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                  {recipes.length > 0 ? (
-                    recipes.map((recipe) => (
-                      <RecipeCard
-                        key={recipe.idMeal}
-                        recipe={recipe}
-                        addToFavorites={addToFavorites}
-                      />
-                    ))
-                  ) : (
-                    <p className="text-gray-500">No recipes found. Try searching for another dish!</p>
-                  )}
-                </div>
-              </main>
-            </div>
+            <Home
+              handleSearch={handleSearch} // Pass handleSearch to Home
+              recipes={recipes} // Pass recipes to Home
+              addToFavorites={addToFavorites} // Pass addToFavorites to Home
+              favorites={favorites} // Pass favorites to Home
+            />
           }
         />
+
+        {/* Recipe Details Page */}
         <Route
           path="/recipe/:id"
           element={
             <RecipeDetails
               addToShoppingList={addToShoppingList}
+              addToFavorites={addToFavorites}
+              favorites={favorites}
             />
           }
         />
+
+        {/* Shopping List Page */}
         <Route
           path="/shopping-list"
           element={
@@ -111,10 +111,15 @@ const App = () => {
               list={shoppingList}
               removeFromShoppingList={removeFromShoppingList}
               updateQuantity={updateQuantity}
+              clearShoppingList={clearShoppingList} // Pass the clear function
             />
           }
         />
+
+        {/* About Page */}
         <Route path="/about" element={<About />} />
+
+        {/* Favorites Page */}
         <Route
           path="/favorites"
           element={
