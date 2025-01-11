@@ -26,7 +26,6 @@ Recipe Finder is a web application that allows users to search for recipes based
   - React
   - Tailwind CSS
   - React Router (for navigation)
-  - Axios (for API requests)
 - **API**:
   - [TheMealDB API](https://www.themealdb.com/api.php)
 - **Deployment**:
@@ -37,26 +36,20 @@ Recipe Finder is a web application that allows users to search for recipes based
 ## Live Demo 🌐
 
 Check out the live version of the app:  
-👉 [Recipe Finder on Vercel](https://recipe-finder.vercel.app)
+👉 [Recipe Finder on Vercel](https://fe-capstone-project-recipe-finder-45nu0wsr9-lanartcoms-projects.vercel.app/)
 
 ---
 
 ## Screenshots 📸
 
 ### Home Page
-![Home Page](screenshots/home.png)
+![Home Page](https://ibb.co/x1tshjr)
 
 ### Search Results
-![Search Results](screenshots/search.png)
+![Search Results](https://ibb.co/zN7zTWZ)
 
 ### Recipe Details
-![Recipe Details](screenshots/details.png)
-
-### Favorites
-![Favorites](screenshots/favorites.png)
-
-### Shopping List
-![Shopping List](screenshots/shopping-list.png)
+![Recipe Details](https://ibb.co/vw5T1HW)
 
 ---
 
@@ -73,5 +66,5 @@ Follow these steps to set up the project locally on your machine.
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/Lanartcom/FE-Capstone-Project-Recipe-Finder.git
+   git clone https://github.com/Lanartcom/fe-capstone-project-recipe-finder.git
    cd recipe-finder
